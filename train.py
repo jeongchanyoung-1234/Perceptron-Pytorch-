@@ -10,11 +10,12 @@ from trainer import IrisTrainer
 def define_argparser():
     p = argparse.ArgumentParser()
 
-    p.add_argument('--hidden_size', type=int, default=16)
-    p.add_argument('--batch_size', type=int, default=4)
+    p.add_argument('--hidden_size', type=int, default=64)
+    p.add_argument('--n_layers', type=int, default=4)
+    p.add_argument('--batch_size', type=int, default=16)
     p.add_argument('--epochs', type=int, default=100)
     p.add_argument('--optimizer', type=str, default='adam')
-    p.add_argument('--lr', type=float, default=1e-2)
+    p.add_argument('--lr', type=float, default=2e-2)
     p.add_argument('--verbose', type=int, default=10)
 
     config = p.parse_args()
@@ -23,7 +24,8 @@ def define_argparser():
 
 def train(config):
     model = IrisClassifier(input_size=4,
-                           hidden_size=config.hidden_size)
+                           hidden_size=config.hidden_size,
+                           n_layers=config.n_layers)
 
     optimizer_map = {'adam': optim.Adam,
                      'sgd': optim.SGD,
