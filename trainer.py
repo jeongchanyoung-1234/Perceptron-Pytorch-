@@ -40,6 +40,7 @@ class IrisTrainer:
         start = time.time()
         for epoch in range(self.config.epochs):
             # train_loop
+            self.model.train()
             for i, (batch_x, batch_y) in enumerate(self.train_dataloader) :
                 batch_y_hat = self.model(batch_x.float())
                 loss = self.criterion(batch_y_hat, batch_y.long())
@@ -57,6 +58,7 @@ class IrisTrainer:
             train_acc = total_train_acc / train_cnt
 
             # valid_loop
+            self.model.eval()
             for i, (batch_x, batch_y) in enumerate(self.valid_dataloader) :
                 with torch.no_grad() :
                     batch_y_hat = self.model(batch_x.float())
